@@ -1,0 +1,39 @@
+group 'tech.vietinfo.zalo_login_plugin_vif'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 18
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    api "com.zing.zalo.zalosdk:core:+"
+    api "com.zing.zalo.zalosdk:auth:+"
+    api "com.zing.zalo.zalosdk:openapi:+"
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">zaa2</string>
+    <string name="appID">2793670590480591223</string>
+    <string name="zalosdk_app_id">2793670590480591223</string>
+    <string name="zalosdk_login_protocol_schema">zalo-2793670590480591223</string>
+</resources>

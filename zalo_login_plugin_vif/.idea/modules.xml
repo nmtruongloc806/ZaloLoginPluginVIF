@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/zalo_login_plugin_vif.iml" filepath="$PROJECT_DIR$/zalo_login_plugin_vif.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/zalo_login_plugin_vif_android.iml" filepath="$PROJECT_DIR$/android/zalo_login_plugin_vif_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/zalo_login_plugin_vif_example_android.iml" filepath="$PROJECT_DIR$/example/android/zalo_login_plugin_vif_example_android.iml" />
+    </modules>
+  </component>
+</project>
