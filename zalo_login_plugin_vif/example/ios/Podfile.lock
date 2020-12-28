@@ -1,0 +1,34 @@
+PODS:
+  - Flutter (1.0.0)
+  - zalo_login_plugin_vif (0.0.1):
+    - Flutter
+    - ZaloSDK
+  - ZaloSDK (2.5.1009):
+    - ZaloSDK/Core (= 2.5.1009)
+    - ZaloSDK/Main (= 2.5.1009)
+  - ZaloSDK/Core (2.5.1009)
+  - ZaloSDK/Main (2.5.1009):
+    - ZaloSDK/Core
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - zalo_login_plugin_vif (from `.symlinks/plugins/zalo_login_plugin_vif/ios`)
+
+SPEC REPOS:
+  trunk:
+    - ZaloSDK
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  zalo_login_plugin_vif:
+    :path: ".symlinks/plugins/zalo_login_plugin_vif/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  zalo_login_plugin_vif: 22923ee675408aa8324b2999bb22100c3ce90b4c
+  ZaloSDK: 0da456bf02a77e927bca1501d9df464d61c06d55
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.0
