@@ -22,16 +22,16 @@ public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
         self.`init`(result: result)
         break;
     case "logIn":
-        login(result: result)
+        self.login(result: result)
         break;
     case "isAuthenticated":
-        isAuthenticated(result: result)
+        self.isAuthenticated(result: result)
         break;
     case "logOut":
-        logOut(result: result)
+        self.logOut(result: result)
         break;
     case "getInfo":
-        getInfo(result: result)
+        self.getInfo(result: result)
         break;
     default:
         break;
