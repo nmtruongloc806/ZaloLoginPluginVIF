@@ -12,6 +12,7 @@ import UIKit
 public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "zalo_login_plugin", binaryMessenger: registrar.messenger())
+    print("da dang ky zalo_login_plugin")
     let instance = MTLZaloLoginPluginVifPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
@@ -47,6 +48,7 @@ public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
     
     private func login(result : @escaping FlutterResult) -> Void {
         do{
+            print("da vao login")
             ZaloSDK.sharedInstance()?.unauthenticate();
             let appDelegate = UIApplication.shared.delegate as! AppDelegate;
             let rootViewController = appDelegate.window.rootViewController;

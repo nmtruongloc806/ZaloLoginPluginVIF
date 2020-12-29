@@ -12,6 +12,7 @@ import UIKit
 public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "zalo_login_plugin", binaryMessenger: registrar.messenger())
+    print("da dang ky zalo_login_plugin")
     let instance = SwiftZaloLoginPluginVifPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
@@ -47,11 +48,13 @@ public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
     
     private func login(result : @escaping FlutterResult) -> Void {
         do{
+            print("da vao login")
             ZaloSDK.sharedInstance()?.unauthenticate();
             let appDelegate = UIApplication.shared.delegate as! FlutterAppDelegate;
             let rootViewController = appDelegate.window.rootViewController;
             ZaloSDK.sharedInstance()?.authenticateZalo(with: ZAZAloSDKAuthenTypeViaZaloAppAndWebView, parentController: rootViewController, isShowLoading: true, handler: { (response : ZOOauthResponseObject?) in
                 if(response?.isSucess == true){
+                    print("da vao login sucess")
                     //let errorCode = String(format: "%ld", response!.errorCode)
                     result([
                         "userID" :response!.userId ?? "",
@@ -64,6 +67,7 @@ public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
                     ])
                 }
                 else{
+                    print("da vao login fail")
                     result([
                         "errorCode" : -1 ,
                         "errorMessage" : response?.errorMessage ?? "dang nhap that bai",
@@ -71,6 +75,7 @@ public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
                 }
             })
         } catch let ex {
+            print("da vao login exception")
             result([
                 "errorCode" : -1 ,
                 "errorMessage" : ex.localizedDescription,
