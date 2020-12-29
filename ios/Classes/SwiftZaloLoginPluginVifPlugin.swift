@@ -63,6 +63,12 @@ public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
                         "gender" :response!.gender ?? ""
                     ])
                 }
+                else{
+                    result([
+                        "errorCode" : -1 ,
+                        "errorMessage" : response?.errorMessage ?? "dang nhap that bai",
+                    ])
+                }
             })
         } catch let ex {
             result([
