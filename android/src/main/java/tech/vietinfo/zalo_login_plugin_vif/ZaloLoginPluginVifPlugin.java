@@ -130,17 +130,22 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
       _result.success(1);
     } else if (call.method.equals("getInfo")) {
       final String[] fields = {"id", "birthday", "gender", "picture", "name"};
-      _mSDk.getProfile(_activity, new ZaloOpenAPICallback() {
-        @Override
-        public void onResult(JSONObject response) {
-          try {
-            Map<String, Object> result = jsonToMap(response);
-            _result.success(result);
-          } catch (JSONException e) {
-            _result.success("Get Info error");
+      try {
+        _mSDk.getProfile(_activity, new ZaloOpenAPICallback() {
+          @Override
+          public void onResult(JSONObject response) {
+            try {
+              Map<String, Object> result = jsonToMap(response);
+              _result.success(result);
+            } catch (JSONException e) {
+              _result.success("Get Info error");
+            }
           }
-        }
-      }, fields);
+        }, fields);
+      }
+      catch (Exception exception){
+        Log.d(LOG_TAG, exception.getMessage());
+      }
     } else {
       _result.notImplemented();
     }
