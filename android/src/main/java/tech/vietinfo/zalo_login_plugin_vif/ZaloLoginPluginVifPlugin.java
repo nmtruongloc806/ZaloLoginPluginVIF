@@ -139,11 +139,13 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
               _result.success(result);
             } catch (JSONException e) {
               _result.success("Get Info error");
+              Log.d(LOG_TAG, e.getMessage());
             }
           }
         }, fields);
       }
       catch (Exception exception){
+        _result.success("Get Info error");
         Log.d(LOG_TAG, exception.getMessage());
       }
     } else {
