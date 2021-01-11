@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:zalo_login_plugin_vif/zalo_login_plugin_vif.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -159,7 +158,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        Text("errorCode: " + zaloLoginResult.errorCode.toString()),
+                        Text("errorCode: " +
+                            zaloLoginResult.errorCode.toString()),
                         Text("userId: " + zaloLoginResult.userId),
                       ],
                     ),
@@ -211,7 +211,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        if (zaloInfo != null && zaloInfo.picture != null) Image.network(zaloInfo.picture.data.url),
+                        if (zaloInfo != null && zaloInfo.picture != null)
+                          Image.network(zaloInfo.picture.data.url),
                         Text(
                           "id: " + zaloInfo?.id,
                         ),
