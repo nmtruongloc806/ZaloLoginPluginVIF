@@ -9,12 +9,19 @@ import Flutter
 import ZaloSDK
 import UIKit
 
-public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "zalo_login_plugin", binaryMessenger: registrar.messenger())
-    print("da dang ky zalo_login_plugin")
-    let instance = MTLZaloLoginPluginVifPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
+public class MTLZaloLoginPluginVifPlugin: NSObject {
+    var cntroller : FlutterViewController?
+  public func register(with registrar: FlutterViewController) {
+    let channel = FlutterMethodChannel(name: "zalo_login_plugin_mtl", binaryMessenger: registrar.binaryMessenger)
+    cntroller = registrar
+    channel.setMethodCallHandler({
+          (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+        self.handle(call , result: result)
+    })
+    print("da dang ky zalo_login_plugin_mtl")
+    
+//    let instance = MTLZaloLoginPluginVifPlugin()
+//    registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -41,19 +48,22 @@ public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
   }
     
     private func `init`(result : FlutterResult) -> Void {
-        let zaloAppID : NSString = Bundle.main.object(forInfoDictionaryKey: "ZaloAppID") as! NSString;
-        ZaloSDK.sharedInstance()?.initialize(withAppId: zaloAppID as String)
+//        let zaloAppID : NSString = Bundle.main.object(forInfoDictionaryKey: "2793670590480591223") as! NSString;
+        let zaloAppID : String = "2793670590480591223";
+        ZaloSDK.sharedInstance()?.initialize(withAppId: zaloAppID)
         result(zaloAppID)
     }
     
     private func login(result : @escaping FlutterResult) -> Void {
         do{
-            print("da vao login")
+            print("MTL da vao login")
             ZaloSDK.sharedInstance()?.unauthenticate();
             let appDelegate = UIApplication.shared.delegate as! AppDelegate;
             let rootViewController = appDelegate.window.rootViewController;
-            ZaloSDK.sharedInstance()?.authenticateZalo(with: ZAZAloSDKAuthenTypeViaZaloAppAndWebView, parentController: rootViewController, isShowLoading: true, handler: { (response : ZOOauthResponseObject?) in
-                if(response?.isSucess == true){
+   
+            ZaloSDK.sharedInstance()?.authenticateZalo(with: ZAZaloSDKAuthenTypeViaWebViewOnly, parentController: rootViewController, isShowLoading: true, handler: { (response : ZOOauthResponseObject?) in
+                print("MTL da vao login 2")
+                if(response?.isSucess == true) {
                     //let errorCode = String(format: "%ld", response!.errorCode)
                     result([
                         "userID" :response!.userId ?? "",
@@ -67,6 +77,7 @@ public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
                 }
             })
         } catch let ex {
+            print("MTL da vao loi")
             result([
                 "errorCode" : -1 ,
                 "errorMessage" : ex.localizedDescription,
@@ -76,7 +87,7 @@ public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
     
     private func isAuthenticated(result : @escaping FlutterResult) -> Void {
         ZaloSDK.sharedInstance()?.isAuthenticatedZalo(completionHandler: { (response : ZOOauthResponseObject?) in
-            if(UInt32(response?.errorCode ?? -1) == kZaloSDKErrorCodeNoneError.rawValue) {
+            if response?.isSucess == true {
                 result(1)
             }
             else{
@@ -99,4 +110,5 @@ public class MTLZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
             }
         })
     }
+    
 }

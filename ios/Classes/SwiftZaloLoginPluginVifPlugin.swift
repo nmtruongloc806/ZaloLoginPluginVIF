@@ -52,7 +52,7 @@ public class SwiftZaloLoginPluginVifPlugin: NSObject, FlutterPlugin {
             ZaloSDK.sharedInstance()?.unauthenticate();
             let appDelegate = UIApplication.shared.delegate as! FlutterAppDelegate;
             let rootViewController = appDelegate.window.rootViewController;
-            ZaloSDK.sharedInstance()?.authenticateZalo(with: ZAZAloSDKAuthenTypeViaZaloAppAndWebView, parentController: rootViewController, isShowLoading: true, handler: { (response : ZOOauthResponseObject?) in
+            ZaloSDK.sharedInstance()?.authenticateZalo(with: ZAZaloSDKAuthenTypeViaWebViewOnly, parentController: rootViewController, isShowLoading: true, handler: { (response : ZOOauthResponseObject?) in
                 if(response?.isSucess == true){
                     print("da vao login sucess")
                     //let errorCode = String(format: "%ld", response!.errorCode)
