@@ -14,6 +14,8 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 
 import android.app.Activity;
+import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
@@ -92,8 +94,8 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
       OAuthCompleteListener listener = new OAuthCompleteListener() {
         @Override
         public void onGetOAuthComplete(OauthResponse response) {
-          Map<String, Object> result = new HashMap<>();
 
+          Map<String, Object> result = new HashMap<>();
           result.put("userId", response.getuId());
           result.put("oauthCode", response.getOauthCode());
           result.put("errorCode", response.getErrorCode());
@@ -110,6 +112,29 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
           result.put("errorMessage", message);
 
           _result.success(result);
+        }
+
+        @Override
+        public void onProtectAccComplete(int errorCode, String message, Dialog dialog) {
+
+          if (errorCode == 0) {
+
+            ZaloSDK.Instance.isAuthenticate(new ValidateOAuthCodeCallback() {
+              @Override
+              public void onValidateComplete(boolean validated, int error_Code, long userId, String oauthCode) {
+                Map<String, Object> result = new HashMap<>();
+
+                result.put("errorCode", error_Code);
+
+                _result.success(result);
+              }
+            });
+
+            dialog.dismiss();
+          }
+
+          //com.zing.zalo.zalosdk.payment.direct.Utils.showAlertDialog(ctx, message, null);
+
         }
       };
       _mSDk.authenticate(_activity, LoginVia.APP_OR_WEB, listener);
@@ -135,8 +160,13 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
           @Override
           public void onResult(JSONObject response) {
             try {
-              Map<String, Object> result = jsonToMap(response);
-              _result.success(result);
+              if (response.has("name")){
+                Map<String, Object> result = jsonToMap(response);
+                _result.success(result);
+              }
+              else{
+                _result.success("Get Info error");
+              }
             } catch (JSONException e) {
               _result.success("Get Info error");
               Log.d(LOG_TAG, e.getMessage());
