@@ -123,7 +123,8 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
               @Override
               public void onValidateComplete(boolean validated, int error_Code, long userId, String oauthCode) {
                 Map<String, Object> result = new HashMap<>();
-
+                result.put("userId", userId);
+                result.put("oauthCode", oauthCode);
                 result.put("errorCode", error_Code);
 
                 _result.success(result);
