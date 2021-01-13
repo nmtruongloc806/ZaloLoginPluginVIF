@@ -15,7 +15,7 @@ A new Flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ZaloSDK'
+  s.dependency 'ZaloSDK','2.5.1009'
   s.static_framework = true
   s.ios.deployment_target = '9.0'
   s.platform = :ios, '8.0'

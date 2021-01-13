@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - zalo_login_plugin_vif (0.0.1):
     - Flutter
-    - ZaloSDK
+    - ZaloSDK (= 2.5.1009)
   - ZaloSDK (2.5.1009):
     - ZaloSDK/Core (= 2.5.1009)
     - ZaloSDK/Main (= 2.5.1009)
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  zalo_login_plugin_vif: 22923ee675408aa8324b2999bb22100c3ce90b4c
+  zalo_login_plugin_vif: daaffcb947a090ee504b4c6121001f2c92f25285
   ZaloSDK: 0da456bf02a77e927bca1501d9df464d61c06d55
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
