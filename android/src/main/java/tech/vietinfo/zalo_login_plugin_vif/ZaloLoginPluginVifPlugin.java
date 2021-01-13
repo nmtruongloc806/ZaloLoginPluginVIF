@@ -143,6 +143,7 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
       _mSDk.isAuthenticate(new ValidateOAuthCodeCallback() {
         @Override
         public void onValidateComplete(boolean validated, int errorCode, long userId, String oauthCode) {
+          Log.d("MTL", validated + "");
           if(validated) {
             _result.success(1);
           } else {
@@ -155,12 +156,20 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
 
       _result.success(1);
     } else if (call.method.equals("getInfo")) {
+      Log.d("MTL", "vao 0");
       final String[] fields = {"id", "birthday", "gender", "picture", "name"};
       try {
+        Log.d("MTL", "vao 1");
         _mSDk.getProfile(_activity, new ZaloOpenAPICallback() {
           @Override
           public void onResult(JSONObject response) {
+            Log.d("MTL", "vao 2");
             try {
+              Log.d("MTL", response.getString("id"));
+              Log.d("MTL", response.getString("birthday"));
+              Log.d("MTL", response.getString("gender"));
+              Log.d("MTL", response.getString("picture"));
+              Log.d("MTL", response.getString("name"));
               if (response.has("name")){
                 Map<String, Object> result = jsonToMap(response);
                 _result.success(result);
