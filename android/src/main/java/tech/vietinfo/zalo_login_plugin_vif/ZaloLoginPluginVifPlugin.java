@@ -14,6 +14,8 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 
 import android.app.Activity;
+import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
@@ -92,8 +94,8 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
       OAuthCompleteListener listener = new OAuthCompleteListener() {
         @Override
         public void onGetOAuthComplete(OauthResponse response) {
-          Map<String, Object> result = new HashMap<>();
 
+          Map<String, Object> result = new HashMap<>();
           result.put("userId", response.getuId());
           result.put("oauthCode", response.getOauthCode());
           result.put("errorCode", response.getErrorCode());
@@ -111,12 +113,37 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
 
           _result.success(result);
         }
+
+        @Override
+        public void onProtectAccComplete(int errorCode, String message, Dialog dialog) {
+
+          if (errorCode == 0) {
+
+            ZaloSDK.Instance.isAuthenticate(new ValidateOAuthCodeCallback() {
+              @Override
+              public void onValidateComplete(boolean validated, int error_Code, long userId, String oauthCode) {
+                Map<String, Object> result = new HashMap<>();
+                result.put("userId", userId);
+                result.put("oauthCode", oauthCode);
+                result.put("errorCode", error_Code);
+
+                _result.success(result);
+              }
+            });
+
+            dialog.dismiss();
+          }
+
+          //com.zing.zalo.zalosdk.payment.direct.Utils.showAlertDialog(ctx, message, null);
+
+        }
       };
       _mSDk.authenticate(_activity, LoginVia.APP_OR_WEB, listener);
     } else if (call.method.equals("isAuthenticated")) {
       _mSDk.isAuthenticate(new ValidateOAuthCodeCallback() {
         @Override
         public void onValidateComplete(boolean validated, int errorCode, long userId, String oauthCode) {
+          Log.d("MTL", validated + "");
           if(validated) {
             _result.success(1);
           } else {
@@ -129,21 +156,36 @@ public class ZaloLoginPluginVifPlugin implements FlutterPlugin, MethodCallHandle
 
       _result.success(1);
     } else if (call.method.equals("getInfo")) {
+      Log.d("MTL", "vao 0");
       final String[] fields = {"id", "birthday", "gender", "picture", "name"};
       try {
+        Log.d("MTL", "vao 1");
         _mSDk.getProfile(_activity, new ZaloOpenAPICallback() {
           @Override
           public void onResult(JSONObject response) {
+            Log.d("MTL", "vao 2");
             try {
-              Map<String, Object> result = jsonToMap(response);
-              _result.success(result);
+              Log.d("MTL", response.getString("id"));
+              Log.d("MTL", response.getString("birthday"));
+              Log.d("MTL", response.getString("gender"));
+              Log.d("MTL", response.getString("picture"));
+              Log.d("MTL", response.getString("name"));
+              if (response.has("name")){
+                Map<String, Object> result = jsonToMap(response);
+                _result.success(result);
+              }
+              else{
+                _result.success("Get Info error");
+              }
             } catch (JSONException e) {
               _result.success("Get Info error");
+              Log.d(LOG_TAG, e.getMessage());
             }
           }
         }, fields);
       }
       catch (Exception exception){
+        _result.success("Get Info error");
         Log.d(LOG_TAG, exception.getMessage());
       }
     } else {
